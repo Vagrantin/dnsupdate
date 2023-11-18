@@ -1,3 +1,5 @@
 /target
+*.toml
 *.txt
-!config-template.txt
+!config-template.toml
+Cargo.lock
