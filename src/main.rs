@@ -8,21 +8,27 @@
 */
 //Local stuff
 mod models;
+
 use std::{env, fs};
 use toml;
-
 use models::Config;
 //public crate
 use reqwest::{Error, header::{HeaderMap, HeaderValue}}; // Import the reqwest crate
 use serde::Serialize; //not sure what I’m doing here 
 use serde_json::json;
+use std::process::exit;
 
-#[tokio::main] // Use the tokio runtime
-async fn main() -> Result<(), Error> {
+fn main() {
 let args: Vec<String> = env::args().collect();
 //dbg!(args);
+if &args.len() < &2 {
+  println!("you are missing the config file");
+  exit(0);
+}
 let filepath = &args[1];
 println!("Path to the file: {}", filepath);
+#[tokio::main] // Use the tokio runtime
+async fn dnsupdate(filepath:&String) -> Result<(), Error> {
 let contents = fs::read_to_string(filepath).expect("Should have been able to read the file");
 let config: Config = toml::from_str(&contents).unwrap();
 let key = config.key.to_string();
@@ -55,6 +61,8 @@ let body = res.text().await?; // Get the response body as text
 println!("Body:\n{}", body); // Print the body
 
 Ok(())
+}
+let _ = dnsupdate(filepath);
 }
 
 // A custom type that can be serialized into JSON
