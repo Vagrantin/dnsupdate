@@ -58,7 +58,7 @@ let res = client
 //println!("Status: {}", res.status()); // Print the status code
 //println!("Headers:\n{:#?}", res.headers()); // Print the headers
 let body = res.text().await?; // Get the response body as text
-//println!("Body:\n{}", body); // Print the body
+println!("Body:\n{}", body); // Print the body
 
 Ok(())
 }
