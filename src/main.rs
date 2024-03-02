@@ -14,7 +14,7 @@ use toml;
 use models::Config;
 //public crate
 use reqwest::{Error, header::{HeaderMap, HeaderValue}}; // Import the reqwest crate
-use serde::Serialize; //not sure what I’m doing here 
+use serde::Serialize; 
 use serde_json::json;
 use std::process::exit;
 
@@ -26,7 +26,7 @@ if &args.len() < &2 {
   exit(0);
 }
 let filepath = &args[1];
-println!("Path to the file: {}", filepath);
+//println!("Path to the file: {}", filepath);
 #[tokio::main] // Use the tokio runtime
 async fn dnsupdate(filepath:&String) -> Result<(), Error> {
 let contents = fs::read_to_string(filepath).expect("Should have been able to read the file");
@@ -37,13 +37,13 @@ let dnsrecord = config.dnsrecord.to_string();
 let endpoint = config.endpoint.to_string();
 let url = format!("{endpoint}{domain}/records/{dnsrecord}/A");
 
-println!("This should be the APIKey: {}", config.key);
+//println!("This should be the APIKey: {}", config.key);
 
 let response = reqwest::get("https://api.ipify.org").await?;  // Make a GET request
 let ip = response.text().await?;  // Get the response body as text
-println!("My public IP address is: {}", ip);  // Print the IP address
+//println!("My public IP address is: {}", ip);  // Print the IP address
 let ipstringslice = json!({"rrset_values": [ip]});
-println!("Body in JSON: {}", ipstringslice.to_string());
+//println!("Body in JSON: {}", ipstringslice.to_string());
 let mut headers = HeaderMap::new();
 headers.insert("CONTENT_TYPE", HeaderValue::from_str("application/json").unwrap()); // Set a custom header
 headers.insert("X-Api-Key", HeaderValue::from_str(&key).unwrap()); // Set a custom header
@@ -55,10 +55,10 @@ let res = client
 .send() // Send the request asynchronously
 .await?; // Wait for the response
 
-println!("Status: {}", res.status()); // Print the status code
-println!("Headers:\n{:#?}", res.headers()); // Print the headers
+//println!("Status: {}", res.status()); // Print the status code
+//println!("Headers:\n{:#?}", res.headers()); // Print the headers
 let body = res.text().await?; // Get the response body as text
-println!("Body:\n{}", body); // Print the body
+//println!("Body:\n{}", body); // Print the body
 
 Ok(())
 }
