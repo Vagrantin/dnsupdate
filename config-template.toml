@@ -1,5 +1,5 @@
 [key]
-# gandi.net API (Production) key
+# dnsprovider.net API (Production) key
 apikey = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"
 
 [domain]
@@ -18,4 +18,4 @@ ttl = 900
 
 [endpoint]
 # Production API
-api = "https://dns.api.gandi.net/api/v5/"
+api = "https://dns.api.dnsprovider.net/api/"
